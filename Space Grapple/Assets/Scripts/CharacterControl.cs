@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class CharacterControl : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5.0f;
@@ -26,11 +26,12 @@ public class CharacterControl : MonoBehaviour
 
     private void MoveInput()
     {
-        _rigidbody.AddForce(Vector2.right * Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime);
+        _rigidbody.AddForce(Vector2.right * Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime,ForceMode2D.Impulse);
+        //_rigidbody.velocity = new Vector2( Input.GetAxisRaw("Horizontal") * moveSpeed, _rigidbody.velocity.y);
     }
 
     private void Jump()
     {
-        _rigidbody.AddForce(upVector * jumpSpeed);
+        _rigidbody.AddForce(upVector * jumpSpeed, ForceMode2D.Impulse);
     }
 }

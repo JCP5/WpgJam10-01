@@ -8,6 +8,7 @@ public class Grapple : MonoBehaviour
     private DistanceJoint2D joint;
     [SerializeField] private Collider2D myColliderBABY;
     [SerializeField] Transform aimer;
+    public GameObject quad;
     private Vector3 grapplePoint;
     void GrappleItBoy(Collider2D otherCollider, Vector3 point)
     {
@@ -17,6 +18,7 @@ public class Grapple : MonoBehaviour
             Destroy(joint);
         }
         grapplePoint = point;
+        Instantiate(quad, grapplePoint, Quaternion.identity);
         joint = gameObject.AddComponent<DistanceJoint2D>();
             joint.connectedBody = otherCollider.attachedRigidbody;
             joint.connectedAnchor = otherCollider.transform.InverseTransformPoint(point);
@@ -26,6 +28,7 @@ public class Grapple : MonoBehaviour
 
     void ShootGrapple()
     {
+        
         myColliderBABY.enabled = false;
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = -Camera.main.transform.position.z;
