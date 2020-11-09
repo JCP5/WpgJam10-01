@@ -9,7 +9,7 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private float moveSpeed = 5.0f;
     [SerializeField] private float jumpSpeed = -10.0f;
     public float DIForce = 10f;
-
+    [SerializeField] private float lerpTime = 0.25f;
     private Rigidbody2D _rigidbody;
 
     [HideInInspector] public int extraJumps = 1;
@@ -17,11 +17,13 @@ public class CharacterControl : MonoBehaviour
     public Transform groundCheck;
     public float checkRadius = 0.3f;
     public LayerMask whatIsGround;
-
+    private DistanceJoint2D joint;
+    private bool IsGrappled { get { return (joint.connectedBody != null && joint.enabled !=false); } }
     protected Vector2 upVector { get {return Vector2.up; } }
 
     private void Awake()
     {
+        joint = GetComponent<DistanceJoint2D>();
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
@@ -38,11 +40,11 @@ public class CharacterControl : MonoBehaviour
         {
             extraJumps = 1;
 
-            if(GetComponent<DistanceJoint2D>().connectedBody != null)
+            if(joint.connectedBody != null)
             {
-                _rigidbody.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+                _rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;//RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
             }
-            else if(GetComponent<DistanceJoint2D>().connectedBody == null)
+            else if(joint.connectedBody == null)
             {
                 _rigidbody.constraints = RigidbodyConstraints2D.None;
                 _rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -59,18 +61,40 @@ public class CharacterControl : MonoBehaviour
             DoubleJump();
         }
 
+        
+    }
+
+    private void FixedUpdate()
+    {
         MoveInput();
     }
 
     private void MoveInput()
     {
-        if(isGrounded == true)
+        float desiredVelocity = Input.GetAxis("Horizontal") * moveSpeed;
+        /*if (isGrounded == true)
         {
-            _rigidbody.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * moveSpeed, _rigidbody.velocity.y);
+            //_rigidbody.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * moveSpeed, _rigidbody.velocity.y);
+            _rigidbody.AddForce(Vector2.right * Input.GetAxis("Horizontal") * DICheck(_rigidbody.velocity.x) * Time.deltaTime * moveSpeed, ForceMode2D.Impulse);
+
         }
         else
         {
-            _rigidbody.AddForce(Vector2.right * Input.GetAxis("Horizontal") * DICheck(_rigidbody.velocity.x) * Time.deltaTime, ForceMode2D.Impulse);
+            _rigidbody.AddForce(Vector2.right * Input.GetAxis("Horizontal") * DICheck(_rigidbody.velocity.x) * Time.deltaTime * moveSpeed, ForceMode2D.Impulse);
+        }*/
+        if (!IsGrappled || (isGrounded && IsGrappled))
+        {
+            float changeInVelocity = desiredVelocity - _rigidbody.velocity.x;
+            if (changeInVelocity != 0 && !(Input.GetAxis("Horizontal") == 0 && !isGrounded))
+            {
+                float forceVector = (changeInVelocity) / lerpTime * _rigidbody.mass;
+                _rigidbody.AddForce(new Vector2(forceVector, 0) * Time.fixedDeltaTime);
+            }
+           
+        }
+        else
+        {
+            _rigidbody.AddForce(Vector2.right * Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeed * _rigidbody.mass * DIForce);
         }
     }
 
@@ -81,7 +105,7 @@ public class CharacterControl : MonoBehaviour
 
     private void DoubleJump()
     {
-        _rigidbody.velocity = new Vector2(0, jumpSpeed);
+        _rigidbody.velocity = new Vector2(0, jumpSpeed) / _rigidbody.mass;
         extraJumps--;
     }
 
