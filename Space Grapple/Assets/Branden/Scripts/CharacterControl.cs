@@ -10,6 +10,15 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private float jumpSpeed = -10.0f;
     public float DIForce = 10f;
 
+    private float jumpBuffer;
+    private float jumpBufferTimer = 0.2f;
+
+    private float groundBuffer;
+    private float groundBufferTimer = 0.2f;
+
+    private float jumpCoolDown;
+    private float jumpCoolDownTimer = 0.25f;
+
     private Rigidbody2D _rigidbody;
 
     [HideInInspector] public int extraJumps = 1;
@@ -28,6 +37,11 @@ public class CharacterControl : MonoBehaviour
     private void Update()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
+
+        jumpBuffer -= Time.deltaTime;
+        groundBuffer -= Time.deltaTime;
+        jumpCoolDown -= Time.deltaTime;
+
         if (isGrounded == false)
         {
             _rigidbody.constraints = RigidbodyConstraints2D.None;
@@ -37,6 +51,7 @@ public class CharacterControl : MonoBehaviour
         if (isGrounded == true)
         {
             extraJumps = 1;
+            groundBuffer = groundBufferTimer;
 
             if(GetComponent<DistanceJoint2D>().connectedBody != null)
             {
@@ -49,7 +64,12 @@ public class CharacterControl : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded == true)
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            jumpBuffer = jumpBufferTimer;
+        }
+
+        if (jumpBuffer > 0 && groundBuffer > 0 && jumpCoolDown < 0)
         {
             Jump();
         }
@@ -76,6 +96,7 @@ public class CharacterControl : MonoBehaviour
 
     private void Jump()
     {
+        jumpCoolDown = jumpCoolDownTimer;
         _rigidbody.AddForce(upVector * jumpSpeed, ForceMode2D.Impulse);
     }
 
