@@ -474,8 +474,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc4496e1d71bff4e9a4ff9aeb87ed95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 500
-  jumpSpeed: 250
+  moveSpeed: 10
+  jumpSpeed: 8
 --- !u!23 &246037917
 MeshRenderer:
   m_ObjectHideFlags: 0
