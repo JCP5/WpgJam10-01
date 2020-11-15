@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Grapple : MonoBehaviour
 {
@@ -12,6 +13,11 @@ public class Grapple : MonoBehaviour
     private Vector3 grapplePoint;
     public float pullForce;
     public float grappleLength = 10f;
+    [SerializeField] Transform[] objectsToMoveToGrapplePoint;
+    [SerializeField] Transform hookEnd;
+    [SerializeField] float penetrationAmount = 0.2f;
+    [SerializeField] private UnityEvent grappleStart;
+    [SerializeField] private UnityEvent grappleEnd;
 
     private CharacterControl characterControlScript;
 
@@ -19,14 +25,26 @@ public class Grapple : MonoBehaviour
     {
         characterControlScript = GetComponent<CharacterControl>();
     }
-    void GrappleItBoy(Collider2D otherCollider, Vector3 point)
+    void GrappleItBoy(Collider2D otherCollider, Vector3 point,Vector3 normal)
     {
+        grappleStart.Invoke();
+        joint.autoConfigureDistance = true;
         joint.GetComponent<DistanceJoint2D>().enabled = true;
         grapplePoint = point;
         Instantiate(grappleParticles, grapplePoint, Quaternion.identity);
+        hookEnd.position = point + (normal * penetrationAmount);
+        hookEnd.SetParent(otherCollider.transform);
+        foreach (Transform tran in objectsToMoveToGrapplePoint)
+        {
+            tran.position = point;
+        }
         joint.connectedBody = otherCollider.attachedRigidbody;
-        joint.connectedAnchor = otherCollider.transform.InverseTransformPoint(point);
+        joint.connectedAnchor = otherCollider.transform.InverseTransformPoint(hookEnd.position);
         joint.enableCollision = true;
+
+        //joint.distance = Vector3.Distance(point, transform.TransformPoint(joint.anchor));
+        joint.autoConfigureDistance = false;
+        //StartCoroutine(GrappleRoutine());
         characterControlScript.extraJumps = 1;
     }
 
@@ -66,7 +84,7 @@ public class Grapple : MonoBehaviour
         RaycastHit2D hit = (Physics2D.Raycast((Vector2)transform.position, (Vector2)dir, grappleLength));
         if (hit.collider != null)
         {
-            GrappleItBoy(hit.collider, hit.point);
+            GrappleItBoy(hit.collider, hit.point,hit.normal);
         }
         myColliderBABY.enabled = true;
     }
@@ -98,14 +116,15 @@ public class Grapple : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(0))
         {
-
+            grappleEnd.Invoke();
             joint.connectedBody = null;
             joint.GetComponent<DistanceJoint2D>().enabled = false;
         }
 
         if(Input.GetMouseButtonDown(0) && characterControlScript.isGrounded == true)
         {
-            ShootGrapplePull();
+            ShootGrapple();
+            //ShootGrapplePull();
         }
 
         if (joint != null)
@@ -115,5 +134,12 @@ public class Grapple : MonoBehaviour
             dir.Normalize();
             aimer.transform.position = transform.position + ((Vector3)dir * 2);
         }
+    }
+
+    IEnumerator GrappleRoutine()
+    {
+        yield return null;
+        //yield return null;
+        joint.autoConfigureDistance = false;
     }
 }
