@@ -11,9 +11,6 @@ public class LightSwitch : MonoBehaviour
     public AudioSource FlipNoise;
     public AudioSource LightOnNoise;
 
-    int interval = 2;
-    float current_time = 0;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -36,13 +33,6 @@ public class LightSwitch : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        current_time += Time.deltaTime;
-        if (current_time >= interval)
-        {
-            //do something here every interval seconds
-            FlipSwitch();
-            current_time = 0.0f;
-        }
     }
 
     //Flip the switch 
