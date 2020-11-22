@@ -18,6 +18,9 @@ public class CharacterControl : MonoBehaviour
     public float checkRadius = 0.3f;
     public LayerMask whatIsGround;
     private DistanceJoint2D joint;
+    public Animator playerAnimator;
+
+    private bool facingRight = true;
     private bool IsGrappled { get { return (joint.connectedBody != null && joint.enabled !=false); } }
     protected Vector2 upVector { get {return Vector2.up; } }
 
@@ -30,14 +33,19 @@ public class CharacterControl : MonoBehaviour
     private void Update()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
+
         if (isGrounded == false)
         {
+            playerAnimator.SetBool("isGrounded", false);
+            playerAnimator.SetBool("isHanging", IsGrappled);
             _rigidbody.constraints = RigidbodyConstraints2D.None;
             _rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
 
         if (isGrounded == true)
         {
+            playerAnimator.SetBool("isGrounded", true);
+            playerAnimator.SetBool("isHanging", IsGrappled);
             extraJumps = 1;
 
             if(joint.connectedBody != null)
@@ -72,6 +80,20 @@ public class CharacterControl : MonoBehaviour
     private void MoveInput()
     {
         float desiredVelocity = Input.GetAxis("Horizontal") * moveSpeed;
+        playerAnimator.SetFloat("Speed", Mathf.Abs(desiredVelocity));
+
+
+        if (facingRight == false && desiredVelocity > 0)
+        {
+            Flip();
+        }
+        if (facingRight == true && desiredVelocity < 0)
+        {
+            Flip();
+        }
+
+
+
         /*if (isGrounded == true)
         {
             //_rigidbody.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * moveSpeed, _rigidbody.velocity.y);
@@ -107,6 +129,12 @@ public class CharacterControl : MonoBehaviour
     {
         _rigidbody.velocity = new Vector2(0, jumpSpeed) / _rigidbody.mass;
         extraJumps--;
+    }
+
+    private void Flip()
+    {
+        facingRight = !facingRight;
+        transform.Rotate(0f, 180f, 0f);
     }
 
     float DICheck(float xVelocity)
