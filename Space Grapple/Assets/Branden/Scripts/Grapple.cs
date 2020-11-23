@@ -84,6 +84,11 @@ public class Grapple : MonoBehaviour
         RaycastHit2D hit = (Physics2D.Raycast((Vector2)transform.position, (Vector2)dir, grappleLength));
         if (hit.collider != null)
         {
+            OnGrappled grappleEvent = hit.collider.gameObject.GetComponent<OnGrappled>();
+            if (grappleEvent != null)
+            {
+                grappleEvent.Grappled();
+            }
             GrappleItBoy(hit.collider, hit.point,hit.normal);
         }
         myColliderBABY.enabled = true;
