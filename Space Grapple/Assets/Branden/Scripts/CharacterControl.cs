@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class CharacterControl : MonoBehaviour
@@ -23,16 +24,18 @@ public class CharacterControl : MonoBehaviour
     private bool facingRight = true;
     private bool IsGrappled { get { return (joint.connectedBody != null && joint.enabled !=false); } }
     protected Vector2 upVector { get {return Vector2.up; } }
+    [SerializeField] private float maxGroundAngle = 60;
+    [SerializeField] CapsuleCollider2D capsule;
 
     private void Awake()
     {
         joint = GetComponent<DistanceJoint2D>();
         _rigidbody = GetComponent<Rigidbody2D>();
     }
-
+   
     private void Update()
     {
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
+        // Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
 
         if (isGrounded == false)
         {
@@ -72,9 +75,43 @@ public class CharacterControl : MonoBehaviour
         
     }
 
+    /*private void OnCollisionStay2D(Collision2D collision)
+    {
+        foreach (ContactPoint2D point in collision.contacts)
+            {
+                if (Vector3.Angle(point.normal, Vector3.up) <= maxGroundAngle)
+                {
+                    isGrounded = true;
+                }
+            }
+    }*/
+
     private void FixedUpdate()
     {
+        isGrounded = false;
+        Vector3 circleSpot = capsule.bounds.center + (-transform.up * ((capsule.size.y / 2) - capsule.size.x / 2));
+        RaycastHit2D[] hits = new RaycastHit2D[2];
+        ContactFilter2D filter = new ContactFilter2D();
+        capsule.enabled = false;
+        if (Physics2D.CircleCast(circleSpot, capsule.size.x / 2,  -transform.up, filter, hits, Physics2D.defaultContactOffset + 0.1f)>0)
+        {
+            foreach(RaycastHit2D hit in hits)
+            {
+                if (hit==null || hit.collider==null || hit.collider.gameObject == this.gameObject)
+                {
+                    continue;
+                }
+               // Debug.Log(Vector3.Angle(hit.normal, transform.up));
+                if (Vector3.Angle(hit.normal, transform.up) <= maxGroundAngle)
+                {
+                    isGrounded = true;
+                }
+            }
+            
+        }
+        capsule.enabled = true;
         MoveInput();
+        
     }
 
     private void MoveInput()
@@ -104,12 +141,24 @@ public class CharacterControl : MonoBehaviour
         {
             _rigidbody.AddForce(Vector2.right * Input.GetAxis("Horizontal") * DICheck(_rigidbody.velocity.x) * Time.deltaTime * moveSpeed, ForceMode2D.Impulse);
         }*/
-        if (!IsGrappled || (isGrounded && IsGrappled))
+        if ( (!IsGrappled && isGrounded) || (isGrounded && IsGrappled))
         {
+            float frameLerpTime = lerpTime;
+            if ((Mathf.Abs(_rigidbody.velocity.x)) > Mathf.Abs(desiredVelocity))
+            {
+                if (desiredVelocity != 0 && Mathf.Sign(_rigidbody.velocity.x) == Mathf.Sign(desiredVelocity))
+                {
+                    frameLerpTime *= 40;
+                }
+                else
+                {
+                    frameLerpTime *= 5;
+                }
+            }
             float changeInVelocity = desiredVelocity - _rigidbody.velocity.x;
             if (changeInVelocity != 0 && !(Input.GetAxis("Horizontal") == 0 && !isGrounded))
             {
-                float forceVector = (changeInVelocity) / lerpTime * _rigidbody.mass;
+                float forceVector = (changeInVelocity) / frameLerpTime * _rigidbody.mass;
                 _rigidbody.AddForce(new Vector2(forceVector, 0) * Time.fixedDeltaTime);
             }
            
@@ -127,7 +176,8 @@ public class CharacterControl : MonoBehaviour
 
     private void DoubleJump()
     {
-        _rigidbody.velocity = new Vector2(0, jumpSpeed) / _rigidbody.mass;
+        //_rigidbody.AddForce(new Vector2(0, jumpSpeed),ForceMode2D.Impulse);
+        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, jumpSpeed/_rigidbody.mass);
         extraJumps--;
     }
 
