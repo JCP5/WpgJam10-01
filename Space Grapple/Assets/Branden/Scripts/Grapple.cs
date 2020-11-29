@@ -45,7 +45,7 @@ public class Grapple : MonoBehaviour
         //joint.distance = Vector3.Distance(point, transform.TransformPoint(joint.anchor));
         joint.autoConfigureDistance = false;
         //StartCoroutine(GrappleRoutine());
-        characterControlScript.extraJumps = 1;
+        characterControlScript.canJump = true;
     }
 
     void GrapplePull(Collider2D otherCollider, Vector3 point)
