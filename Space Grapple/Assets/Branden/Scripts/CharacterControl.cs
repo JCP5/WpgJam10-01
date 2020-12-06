@@ -9,11 +9,15 @@ public class CharacterControl : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5.0f;
     [SerializeField] private float jumpSpeed = -10.0f;
+    [SerializeField] private float doubleJumpSpeed = 150f;
     public float DIForce = 10f;
     [SerializeField] private float lerpTime = 0.25f;
     private Rigidbody2D _rigidbody;
 
-    [HideInInspector] public int extraJumps = 1;
+    public int extraJumps;
+    [SerializeField] public int maxExtraJumps = 3;
+
+    public bool canJump;
     public bool isGrounded;
     public Transform groundCheck;
     public float checkRadius = 0.3f;
@@ -27,15 +31,20 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private float maxGroundAngle = 60;
     [SerializeField] CapsuleCollider2D capsule;
 
+
     private void Awake()
     {
         joint = GetComponent<DistanceJoint2D>();
         _rigidbody = GetComponent<Rigidbody2D>();
     }
-   
+
+    private void Start()
+    {
+        extraJumps = maxExtraJumps;
+    }
     private void Update()
     {
-        // Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
+        //Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
 
         if (isGrounded == false)
         {
@@ -47,13 +56,14 @@ public class CharacterControl : MonoBehaviour
 
         if (isGrounded == true)
         {
+            canJump = true;
             playerAnimator.SetBool("isGrounded", true);
             playerAnimator.SetBool("isHanging", IsGrappled);
-            extraJumps = 1;
+            extraJumps = maxExtraJumps;
 
             if(joint.connectedBody != null)
             {
-                _rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;//RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+                _rigidbody.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
             }
             else if(joint.connectedBody == null)
             {
@@ -62,12 +72,12 @@ public class CharacterControl : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded == true)
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded == true && canJump == true)
         {
             Jump();
         }
 
-        if(Input.GetKeyDown(KeyCode.Space) && isGrounded == false && extraJumps > 0)
+        if(Input.GetKeyDown(KeyCode.Space) && isGrounded == false && extraJumps > 0 && canJump == true)
         {
             DoubleJump();
         }
@@ -176,8 +186,9 @@ public class CharacterControl : MonoBehaviour
 
     private void DoubleJump()
     {
+        canJump = false;
         //_rigidbody.AddForce(new Vector2(0, jumpSpeed),ForceMode2D.Impulse);
-        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, jumpSpeed/_rigidbody.mass);
+        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, doubleJumpSpeed/_rigidbody.mass);
         extraJumps--;
     }
 
