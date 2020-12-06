@@ -23,7 +23,7 @@ public class CrawlerBehaviour : MonoBehaviour
 
         if (hit.collider == null)
         {
-            transform.rotation += Quaternion.Euler(new Vector3(0, Mathf.Sign()
+            //transform.rotation += Quaternion.Euler(new Vector3(0, Mathf.Sign()
         }
     }
 }
