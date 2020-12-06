@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &216741072716053546
+--- !u!1 &3321512449493350283
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,39 +8,40 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8901615683380409402}
-  - component: {fileID: 4731955269983981648}
-  - component: {fileID: 3497952499574813392}
-  - component: {fileID: 2076130313172389467}
-  - component: {fileID: 3779606166425039698}
+  - component: {fileID: 6238190751570984859}
+  - component: {fileID: 7832090832537803761}
+  - component: {fileID: 2130585670407960945}
+  - component: {fileID: 3590917736175437306}
+  - component: {fileID: 3385539728986842329}
+  - component: {fileID: -8432087690679496365}
   m_Layer: 0
-  m_Name: Tile_PlatformLeft_BaseStyle
+  m_Name: Tile_PlatformRight_BaseStyle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8901615683380409402
+--- !u!4 &6238190751570984859
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 216741072716053546}
+  m_GameObject: {fileID: 3321512449493350283}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.3, y: 2.33, z: 0}
+  m_LocalPosition: {x: 2.28, y: 2.33, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4731955269983981648
+--- !u!114 &7832090832537803761
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 216741072716053546}
+  m_GameObject: {fileID: 3321512449493350283}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
@@ -161,55 +162,55 @@ MonoBehaviour:
   - m_Vertices: 0b0000000e00000012000000
   m_SharedTextures: []
   m_Positions:
-  - {x: 0.25, y: 0.5, z: 0}
-  - {x: 2, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 1.7499998, y: 0.5, z: 0}
   - {x: 0, y: 2, z: 0}
   - {x: 2, y: 2, z: 0}
-  - {x: 2, y: 0, z: 0}
-  - {x: 2, y: 0, z: -2}
+  - {x: 1.7499998, y: 0.5, z: 0}
+  - {x: 1.7499998, y: 0.5, z: -2}
   - {x: 2, y: 2, z: 0}
   - {x: 2, y: 2, z: -2}
-  - {x: 2, y: 0, z: -2}
-  - {x: 0.25, y: 0.5, z: -2}
+  - {x: 1.7499998, y: 0.5, z: -2}
+  - {x: 0, y: 0, z: -2}
   - {x: 2, y: 2, z: -2}
   - {x: 0, y: 2, z: -2}
-  - {x: 0.25, y: 0.5, z: -2}
-  - {x: 0.25, y: 0.5, z: 0}
+  - {x: 0, y: 0, z: -2}
+  - {x: 0, y: 0, z: 0}
   - {x: 0, y: 2, z: -2}
   - {x: 0, y: 2, z: 0}
   - {x: 0, y: 2, z: 0}
   - {x: 2, y: 2, z: 0}
   - {x: 0, y: 2, z: -2}
   - {x: 2, y: 2, z: -2}
-  - {x: 0.25, y: 0.5, z: -2}
-  - {x: 2, y: 0, z: -2}
-  - {x: 0.25, y: 0.5, z: 0}
-  - {x: 2, y: 0, z: 0}
+  - {x: 0, y: 0, z: -2}
+  - {x: 1.7499998, y: 0.5, z: -2}
+  - {x: 0, y: 0, z: 0}
+  - {x: 1.7499998, y: 0.5, z: 0}
   m_Textures0:
-  - {x: -0.25, y: 0.5}
-  - {x: -2, y: 0}
-  - {x: 0, y: 2}
-  - {x: -2, y: 2}
   - {x: 0, y: 0}
-  - {x: -2, y: 0}
+  - {x: -1.7499998, y: 0.5}
   - {x: 0, y: 2}
   - {x: -2, y: 2}
-  - {x: 2, y: 0}
-  - {x: 0.25, y: 0.5}
+  - {x: 0, y: 0.78089535}
+  - {x: -2, y: 0.78089535}
+  - {x: 0, y: 2.301586}
+  - {x: -2, y: 2.301586}
+  - {x: 1.7499998, y: 0.5}
+  - {x: 0, y: 0}
   - {x: 2, y: 2}
   - {x: 0, y: 2}
-  - {x: 2, y: 0.4520972}
-  - {x: 0, y: 0.4520972}
-  - {x: 2, y: 1.9727879}
-  - {x: 0, y: 1.9727879}
+  - {x: 2, y: 0}
+  - {x: 0, y: 0}
+  - {x: 2, y: 2}
+  - {x: 0, y: 2}
   - {x: 0, y: 0}
   - {x: 2, y: 0}
   - {x: 0, y: -2}
   - {x: 2, y: -2}
-  - {x: -0.10302043, y: -2}
-  - {x: -1.9230479, y: -2}
-  - {x: -0.10302043, y: 0}
-  - {x: -1.9230479, y: 0}
+  - {x: -0, y: -2}
+  - {x: -1.8200272, y: -2}
+  - {x: 0, y: 0}
+  - {x: -1.8200272, y: 0}
   m_Textures2: []
   m_Textures3: []
   m_Tangents:
@@ -233,10 +234,10 @@ MonoBehaviour:
   - {x: 1, y: 0, z: 0, w: -1}
   - {x: 1, y: 0, z: 0, w: -1}
   - {x: 1, y: 0, z: 0, w: -1}
-  - {x: -0.96152395, y: 0.27472112, z: 0, w: -1}
-  - {x: -0.96152395, y: 0.27472112, z: 0, w: -1}
-  - {x: -0.96152395, y: 0.27472112, z: 0, w: -1}
-  - {x: -0.96152395, y: 0.27472112, z: 0, w: -1}
+  - {x: -0.961524, y: -0.2747212, z: 0, w: -1}
+  - {x: -0.961524, y: -0.2747212, z: 0, w: -1}
+  - {x: -0.961524, y: -0.2747212, z: 0, w: -1}
+  - {x: -0.961524, y: -0.2747212, z: 0, w: -1}
   m_Colors: []
   m_UnwrapParameters:
     m_HardAngle: 88
@@ -248,17 +249,15 @@ MonoBehaviour:
   m_Mesh: {fileID: 0}
   m_IsSelectable: 1
   m_SelectedFaces: 
-  m_SelectedEdges:
-  - a: 10
-    b: 8
-  m_SelectedVertices: 0a00000008000000
---- !u!23 &3497952499574813392
+  m_SelectedEdges: []
+  m_SelectedVertices: 
+--- !u!23 &2130585670407960945
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 216741072716053546}
+  m_GameObject: {fileID: 3321512449493350283}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -293,21 +292,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &2076130313172389467
+--- !u!33 &3590917736175437306
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 216741072716053546}
+  m_GameObject: {fileID: 3321512449493350283}
   m_Mesh: {fileID: 0}
---- !u!60 &3779606166425039698
+--- !u!60 &3385539728986842329
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 216741072716053546}
+  m_GameObject: {fileID: 3321512449493350283}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -326,7 +325,28 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 2.0055752, y: 1.9937153}
-      - {x: 0.00653857, y: 1.9996076}
-      - {x: 0.2547179, y: 0.4878422}
-      - {x: 2.0057302, y: -0.015078783}
+    - - {x: 2.001757, y: 1.9997845}
+      - {x: -0.0111628175, y: 1.9969678}
+      - {x: 0.024872363, y: -0.02934134}
+      - {x: 1.7907791, y: 0.46082187}
+--- !u!50 &-8432087690679496365
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3321512449493350283}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
