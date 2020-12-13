@@ -490,6 +490,8 @@ MonoBehaviour:
   DIForce: 65
   lerpTime: 0.0005
   extraJumps: 1
+  maxExtraJumps: 3
+  canJump: 0
   isGrounded: 1
   groundCheck: {fileID: 7963876195622384771}
   checkRadius: 0.3
@@ -499,6 +501,7 @@ MonoBehaviour:
   playerAnimator: {fileID: 4804747777216995190}
   maxGroundAngle: 60
   capsule: {fileID: 7963876196052036381}
+  deathEffect: {fileID: 8590972417968913122, guid: f164713b3bcb5614eac90d3f7af772d4, type: 3}
 --- !u!50 &7963876196052036380
 Rigidbody2D:
   serializedVersion: 4
