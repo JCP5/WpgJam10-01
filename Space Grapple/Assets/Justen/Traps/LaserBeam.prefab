@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 3905694650390128844}
   - component: {fileID: 3905694650390128843}
   - component: {fileID: 3905694650390128842}
-  - component: {fileID: 3905694650390128841}
+  - component: {fileID: 484709159166611504}
   m_Layer: 0
   m_Name: LaserBeam
   m_TagString: Untagged
@@ -179,17 +179,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &3905694650390128841
-CapsuleCollider:
+--- !u!70 &484709159166611504
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3905694650390128840}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1, y: 2}
+  m_Direction: 0
