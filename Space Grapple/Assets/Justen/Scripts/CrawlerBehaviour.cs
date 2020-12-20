@@ -13,6 +13,8 @@ public class CrawlerBehaviour : MonoBehaviour
     public float adjustWalkSpeed = 1;
     public float adjustRunSpeed = 50;
 
+    public GameObject deathEffect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -121,13 +123,29 @@ public class CrawlerBehaviour : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (transform.rotation.eulerAngles.y == 0)
+        if (collision.gameObject.tag == "Box")
         {
-            transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+            if (Mathf.Abs(collision.relativeVelocity.y) > 5f)
+            {
+                Die();
+            }
         }
         else
         {
-            transform.rotation = Quaternion.Euler(Vector3.zero);
+            if (transform.rotation.eulerAngles.y == 0)
+            {
+                transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(Vector3.zero);
+            }
         }
+    }
+
+    public void Die()
+    {
+        Instantiate(deathEffect, this.transform.position, Quaternion.Euler(new Vector3 (-90,0,0)));
+        Destroy(this.gameObject);
     }
 }

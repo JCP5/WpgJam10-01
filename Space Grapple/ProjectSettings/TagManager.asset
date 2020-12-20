@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Light
+  - BezierControlPoint
+  - Laser
+  - Box
   layers:
   - Default
   - TransparentFX
