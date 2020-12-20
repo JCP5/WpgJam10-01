@@ -6,7 +6,7 @@ public class CrawlerBehaviour : MonoBehaviour
 {
     Rigidbody2D rb;
     Animator anim;
-    public float moveSpeed = 0;
+    float moveSpeed = 0;
     public bool standing = false;
     public bool attacking = false;
 
@@ -35,28 +35,32 @@ public class CrawlerBehaviour : MonoBehaviour
 
         try
         {
-            if (hit.collider.tag == "Player" || hit.collider.tag == "Prey")
+            if (attacking == false)
             {
-                if (Vector3.Distance(this.transform.position, hit.transform.position) < 5)
+                if (hit.collider.tag == "Player" || hit.collider.tag == "Prey")
                 {
-                    attacking = true;
-                    moveSpeed = 0;
+                    if (Vector3.Distance(this.transform.position, hit.transform.position) < 5)
+                    {
+                        attacking = true;
+                        moveSpeed = 0;
+                    }
+                    else
+                    {
+                        attacking = false;
+                        moveSpeed = adjustRunSpeed;
+                    }
                 }
                 else
                 {
+                    moveSpeed = adjustWalkSpeed;
                     attacking = false;
-                    moveSpeed = adjustRunSpeed;
                 }
             }
-            else
-            {
-                moveSpeed = adjustWalkSpeed;
-                attacking = false;
-            }
-        }   
+        }
         catch
         {
-            return;
+            moveSpeed = adjustWalkSpeed;
+            attacking = false;
         }
     }
 

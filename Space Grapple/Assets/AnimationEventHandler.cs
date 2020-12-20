@@ -5,6 +5,7 @@ using UnityEngine;
 public class AnimationEventHandler : MonoBehaviour
 {
     public Collider2D hitBox;
+    public CrawlerBehaviour cb;
 
     public void HitBoxActive()
     {
@@ -14,5 +15,10 @@ public class AnimationEventHandler : MonoBehaviour
     public void HitBoxDeactive()
     {
         hitBox.enabled = false;
+    }
+
+    public void AttackingToFalse()
+    {
+        cb.attacking = false;
     }
 }
