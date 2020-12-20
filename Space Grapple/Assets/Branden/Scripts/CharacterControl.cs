@@ -31,6 +31,8 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private float maxGroundAngle = 60;
     [SerializeField] CapsuleCollider2D capsule;
 
+    public GameObject deathEffect;
+
 
     private void Awake()
     {
@@ -208,5 +210,11 @@ public class CharacterControl : MonoBehaviour
         {
             return DIForce;
         }
+    }
+
+    public void Die()
+    {
+        Instantiate(deathEffect, transform.position, Quaternion.identity);
+        this.gameObject.SetActive(false);
     }
 }
