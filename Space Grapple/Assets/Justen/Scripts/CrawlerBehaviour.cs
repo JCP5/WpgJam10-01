@@ -35,7 +35,7 @@ public class CrawlerBehaviour : MonoBehaviour
 
         try
         {
-            if (hit.collider.tag == "Player" || hit.collider.tag == "Prey")
+            if ((hit.collider.tag == "Player" || hit.collider.tag == "Prey") && attacking == false)
             {
                 if (Vector3.Distance(this.transform.position, hit.transform.position) < 5)
                 {

@@ -261,7 +261,6 @@ MonoBehaviour:
   attacking: 0
   adjustWalkSpeed: 1
   adjustRunSpeed: 20
-  myHitBox: {fileID: 727703657}
 --- !u!95 &6030888306520174912
 Animator:
   serializedVersion: 3
