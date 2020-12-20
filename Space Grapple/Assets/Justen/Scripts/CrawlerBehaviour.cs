@@ -6,12 +6,14 @@ public class CrawlerBehaviour : MonoBehaviour
 {
     Rigidbody2D rb;
     Animator anim;
-    public float moveSpeed = 0;
+    float moveSpeed = 0;
     public bool standing = false;
     public bool attacking = false;
 
     public float adjustWalkSpeed = 1;
     public float adjustRunSpeed = 50;
+
+    public GameObject deathEffect;
 
     // Start is called before the first frame update
     void Start()
@@ -35,28 +37,32 @@ public class CrawlerBehaviour : MonoBehaviour
 
         try
         {
-            if ((hit.collider.tag == "Player" || hit.collider.tag == "Prey") && attacking == false)
+            if (attacking == false)
             {
-                if (Vector3.Distance(this.transform.position, hit.transform.position) < 5)
+                if (hit.collider.tag == "Player" || hit.collider.tag == "Prey")
                 {
-                    attacking = true;
-                    moveSpeed = 0;
+                    if (Vector3.Distance(this.transform.position, hit.transform.position) < 5)
+                    {
+                        attacking = true;
+                        moveSpeed = 0;
+                    }
+                    else
+                    {
+                        attacking = false;
+                        moveSpeed = adjustRunSpeed;
+                    }
                 }
                 else
                 {
+                    moveSpeed = adjustWalkSpeed;
                     attacking = false;
-                    moveSpeed = adjustRunSpeed;
                 }
             }
-            else
-            {
-                moveSpeed = adjustWalkSpeed;
-                attacking = false;
-            }
-        }   
+        }
         catch
         {
-            return;
+            moveSpeed = adjustWalkSpeed;
+            attacking = false;
         }
     }
 
@@ -117,13 +123,29 @@ public class CrawlerBehaviour : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (transform.rotation.eulerAngles.y == 0)
+        if (collision.gameObject.tag == "Box")
         {
-            transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+            if (Mathf.Abs(collision.relativeVelocity.y) > 5f)
+            {
+                Die();
+            }
         }
         else
         {
-            transform.rotation = Quaternion.Euler(Vector3.zero);
+            if (transform.rotation.eulerAngles.y == 0)
+            {
+                transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(Vector3.zero);
+            }
         }
+    }
+
+    public void Die()
+    {
+        Instantiate(deathEffect, this.transform.position, Quaternion.Euler(new Vector3 (-90,0,0)));
+        Destroy(this.gameObject);
     }
 }
