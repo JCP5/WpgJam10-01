@@ -20,12 +20,12 @@ public class LightScript : MonoBehaviour
         if(lightOn == false)
         {
             lightOn = true;
-            LevelManager.instance.lightsOn++;
+            LevelManager.instance.UpdateLights(lightOn);
         }
         else if(lightOn == true)
         {
             lightOn = false;
-            LevelManager.instance.lightsOn--;
+            LevelManager.instance.UpdateLights(lightOn);
         }
     }
 

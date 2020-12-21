@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class LightSwitch : MonoBehaviour
 {
-
-    public Light[] ControlledLights;
+    public LightScript[] ControlledLights;
     public bool Flipped;
-
-    public AudioSource FlipNoise;
-    public AudioSource LightOnNoise;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +29,7 @@ public class LightSwitch : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
     }
 
     //Flip the switch 
@@ -48,8 +45,6 @@ public class LightSwitch : MonoBehaviour
             {
                 ControlledLights[i].enabled = false;
             }
-
-            FlipNoise.Play();
         }
         else
         {
@@ -61,11 +56,6 @@ public class LightSwitch : MonoBehaviour
             {
                 ControlledLights[i].enabled = true;
             }
-
-            FlipNoise.Play();
-            LightOnNoise.Play();
         }
     }
-
-
 }

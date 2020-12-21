@@ -129,6 +129,17 @@ public class CrawlerBehaviour : MonoBehaviour
             {
                 Die();
             }
+            else
+            {
+                if (transform.rotation.eulerAngles.y == 0)
+                {
+                    transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+                }
+                else
+                {
+                    transform.rotation = Quaternion.Euler(Vector3.zero);
+                }
+            }
         }
         else
         {
