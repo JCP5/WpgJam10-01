@@ -15,6 +15,9 @@ public class CrawlerBehaviour : MonoBehaviour
 
     public GameObject deathEffect;
 
+    public AudioSource audioSource;
+    public AudioClip AttackSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +49,7 @@ public class CrawlerBehaviour : MonoBehaviour
                     {
                         attacking = true;
                         moveSpeed = 0;
+                        audioSource.PlayOneShot(AttackSound);
                     }
                     else
                     {
