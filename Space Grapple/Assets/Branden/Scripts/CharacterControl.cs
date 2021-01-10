@@ -19,6 +19,19 @@ public class CharacterControl : MonoBehaviour
 
     public bool canJump;
     public bool isGrounded;
+
+    //Variablees to check if last update had the character in the air.
+    //Used for if it should play a landing noise.
+    public bool WasIsGrounded;
+    public AudioSource audioSource;
+    public AudioClip LandingSound;
+
+    //Other sound effects
+    public AudioClip FirstJumpSound;
+    public AudioClip DoubleJumpSound;
+    public AudioClip DeathSound;
+    
+
     public Transform groundCheck;
     public float checkRadius = 0.3f;
     public LayerMask whatIsGround;
@@ -54,6 +67,7 @@ public class CharacterControl : MonoBehaviour
             playerAnimator.SetBool("isHanging", IsGrappled);
             _rigidbody.constraints = RigidbodyConstraints2D.None;
             _rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+            WasIsGrounded = false;
         }
 
         if (isGrounded == true)
@@ -72,6 +86,11 @@ public class CharacterControl : MonoBehaviour
                 _rigidbody.constraints = RigidbodyConstraints2D.None;
                 _rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
             }
+            if (!WasIsGrounded)
+            {
+                audioSource.PlayOneShot(LandingSound);
+            }
+            WasIsGrounded = true;
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded == true && canJump == true)
@@ -184,6 +203,7 @@ public class CharacterControl : MonoBehaviour
     private void Jump()
     {
         _rigidbody.AddForce(upVector * jumpSpeed, ForceMode2D.Impulse);
+        audioSource.PlayOneShot(FirstJumpSound);
     }
 
     private void DoubleJump()
@@ -192,6 +212,7 @@ public class CharacterControl : MonoBehaviour
         //_rigidbody.AddForce(new Vector2(0, jumpSpeed),ForceMode2D.Impulse);
         _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, doubleJumpSpeed/_rigidbody.mass);
         extraJumps--;
+        audioSource.PlayOneShot(DoubleJumpSound);
     }
 
     private void Flip()
@@ -216,5 +237,6 @@ public class CharacterControl : MonoBehaviour
     {
         Instantiate(deathEffect, transform.position, Quaternion.identity);
         this.gameObject.SetActive(false);
+        audioSource.PlayOneShot(DeathSound);
     }
 }

@@ -19,6 +19,11 @@ public class Grapple : MonoBehaviour
     [SerializeField] private UnityEvent grappleStart;
     [SerializeField] private UnityEvent grappleEnd;
 
+    //Sound Effects
+    public AudioSource audioSource;
+    public AudioClip ShootGrappleSound;
+
+
     private CharacterControl characterControlScript;
 
     void Start()
@@ -92,6 +97,7 @@ public class Grapple : MonoBehaviour
             GrappleItBoy(hit.collider, hit.point,hit.normal);
         }
         myColliderBABY.enabled = true;
+        audioSource.PlayOneShot(ShootGrappleSound);
     }
 
     void ShootGrapplePull()
