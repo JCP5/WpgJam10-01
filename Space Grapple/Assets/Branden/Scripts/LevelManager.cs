@@ -5,6 +5,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
+    public LightScript[] lightsInScene;
     public int numOfLights;
     public int lightsOn;
 
@@ -18,23 +19,45 @@ public class LevelManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        numOfLights = lightsInScene.Length;
     }
 
     void Start()
     {
-        
+        foreach (LightScript ls in lightsInScene)
+        {
+            if (ls.lightOn == true)
+            {
+                lightsOn++;
+            }
+        }
     }
 
     void Update()
     {
-        if(lightsOn == numOfLights)
-        {
-            LevelClear();
-        }
+
     }
 
     void LevelClear()
     {
-        Debug.Log("Level Clear");
+        if (lightsOn == numOfLights)
+        {
+            Debug.Log("Level Clear");
+        }
+    }
+
+    public void UpdateLights(bool state)
+    {
+        if (state == true)
+        {
+            lightsOn++;
+            LevelClear();
+        }
+        else
+        {
+            lightsOn--;
+            LevelClear();
+        }
     }
 }
