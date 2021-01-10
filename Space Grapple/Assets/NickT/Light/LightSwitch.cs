@@ -7,25 +7,17 @@ public class LightSwitch : MonoBehaviour
     public LightScript[] ControlledLights;
     public bool flipped;
 
+    public Material handleMat;
+    public Color color;
+
     public bool playerNearby;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (flipped)
-        {
-            for (int i = 0; i < ControlledLights.Length; i++)
-            {
-                ControlledLights[i].enabled = true;
-            }
-        }
-        else
-        {
-            for (int i = 0; i < ControlledLights.Length; i++)
-            {
-                ControlledLights[i].enabled = false;
-            }
-        }
+        handleMat = transform.Find("Handle").GetComponent<MeshRenderer>().material;
+        ControlledLights = GetComponentsInChildren<LightScript>();
+        IntializeSwitch(flipped);
     }
 
     // Update is called once per frame
@@ -35,6 +27,7 @@ public class LightSwitch : MonoBehaviour
         {
             FlipSwitch();
         }
+        handleMat.color = color;
     }
 
     //Flip the switch 
@@ -46,23 +39,31 @@ public class LightSwitch : MonoBehaviour
         {
             flipped = false;
 
-            handle.localRotation = Quaternion.Euler(90, 0, 0);
-            FlipLights(flipped);
+            handle.localRotation = Quaternion.Euler(90, 90, 0);
         }
         else
         {
             flipped = true;
 
-            handle.localRotation = Quaternion.Euler(270, 0, 0);
-            FlipLights(flipped);
+            handle.localRotation = Quaternion.Euler(270, 90, 0);
+        }
+
+        UpdateLights(flipped);
+    }
+
+    void IntializeSwitch(bool state)
+    {
+        foreach (LightScript ls in ControlledLights)
+        {
+            ls.UpdateLightState(state);
         }
     }
 
-    void FlipLights(bool state)
+    void UpdateLights(bool state)
     {
-        for (int i = 0; i < ControlledLights.Length; i++)
+        foreach(LightScript ls in ControlledLights)
         {
-            ControlledLights[i].enabled = state;
+            ls.SwitchLight(state);
         }
     }
 

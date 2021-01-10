@@ -6,6 +6,9 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
     public LightScript[] lightsInScene;
+
+    public int nextLevel = 0;
+
     public int numOfLights;
     public int lightsOn;
 
@@ -20,28 +23,29 @@ public class LevelManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        numOfLights = lightsInScene.Length;
+        lightsInScene = FindObjectsOfType<LightScript>();
     }
 
     void Start()
     {
+        numOfLights = lightsInScene.Length;
+        InitializeOnLights();
+    }
+
+    void InitializeOnLights()
+    {
         foreach (LightScript ls in lightsInScene)
         {
-            if (ls.lightOn == true)
+            if (ls.GetParentSwitchState() == true)
             {
                 lightsOn++;
             }
         }
     }
 
-    void Update()
+    public void LevelClear()
     {
-
-    }
-
-    void LevelClear()
-    {
-        if (lightsOn == numOfLights)
+        if (lightsOn >= numOfLights)
         {
             Debug.Log("Level Clear");
         }

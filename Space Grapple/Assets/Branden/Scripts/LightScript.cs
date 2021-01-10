@@ -4,30 +4,66 @@ using UnityEngine;
 
 public class LightScript : MonoBehaviour
 {
-    public bool lightOn;
-    public bool playerNearby;
+    float defaultIntensity;
 
-    public Light lightComponent;
+    public LightSwitch parentSwitch;
+    public Light lightObject;
 
-    public void SwitchLight()
+    private void Start()
     {
-        if(lightOn == false)
+        parentSwitch = GetComponentInParent<LightSwitch>();
+        lightObject = this.GetComponent<Light>();
+        defaultIntensity = lightObject.intensity;
+        UpdateLightState(parentSwitch.flipped);
+    }
+
+    private void Update()
+    {
+        lightObject.color = parentSwitch.handleMat.color;
+        UpdateLightBulbMat();
+    }
+
+    public void SwitchLight(bool lightSwitchState)
+    {
+        UpdateLightState(lightSwitchState);
+        LevelManager.instance.UpdateLights(lightSwitchState);
+    }
+
+    public void UpdateLightState(bool state)
+    {
+        Debug.Log("hello " + parentSwitch.name);
+        if (state)
         {
-            lightOn = true;
-            LevelManager.instance.UpdateLights(lightOn);
+            lightObject.intensity = defaultIntensity;
         }
-        else if(lightOn == true)
+        else
         {
-            lightOn = false;
-            LevelManager.instance.UpdateLights(lightOn);
+            lightObject.intensity = 0;
         }
     }
 
-    public void LightState(bool state)
+    public bool GetParentSwitchState()
     {
-        if (state)
+        return parentSwitch.flipped;
+    }
+
+    void UpdateLightBulbMat()
+    {
+        GameObject lightBulbObject = transform.Find("marine_light2").transform.Find("LightBulb").gameObject;
+        MeshRenderer lightBulbMat = lightBulbObject.GetComponent<MeshRenderer>();
+        Material mat = lightBulbMat.material;
+
+        mat.color = lightObject.color;
+
+        if (lightObject.intensity > 0)
         {
-            lightComponent.enabled = state;
+            mat.EnableKeyword("_EMISSION");
+            mat.SetColor("_EmissionColor", lightObject.color);
+        }
+        else
+        {
+            mat.EnableKeyword("_EMISSION");
+            mat.SetColor("_EmissionColor", Color.black);
         }
     }
 }
