@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class LightSwitch : MonoBehaviour
 {
+    public LightScript[] ControlledLights;
+    public bool flipped;
 
-    public Light[] ControlledLights;
-    public bool Flipped;
-
-    public AudioSource FlipNoise;
-    public AudioSource LightOnNoise;
+    public bool playerNearby;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (Flipped)
+        if (flipped)
         {
             for (int i = 0; i < ControlledLights.Length; i++)
             {
@@ -33,39 +31,48 @@ public class LightSwitch : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.E) && playerNearby == true)
+        {
+            FlipSwitch();
+        }
     }
 
     //Flip the switch 
     void FlipSwitch()
     {
-        if (Flipped)
+        Transform handle = transform.Find("Handle");
+
+        if (flipped)
         {
-            Flipped = false;
+            flipped = false;
 
-            this.transform.RotateAround(transform.position, transform.right, 180f);
-
-            for (int i = 0; i < ControlledLights.Length; i++)
-            {
-                ControlledLights[i].enabled = false;
-            }
-
-            FlipNoise.Play();
+            handle.localRotation = Quaternion.Euler(90, 0, 0);
+            FlipLights(flipped);
         }
         else
         {
-            Flipped = true;
+            flipped = true;
 
-            this.transform.RotateAround(transform.position, transform.right, 180f);
-
-            for (int i = 0; i < ControlledLights.Length; i++)
-            {
-                ControlledLights[i].enabled = true;
-            }
-
-            FlipNoise.Play();
-            LightOnNoise.Play();
+            handle.localRotation = Quaternion.Euler(270, 0, 0);
+            FlipLights(flipped);
         }
     }
 
+    void FlipLights(bool state)
+    {
+        for (int i = 0; i < ControlledLights.Length; i++)
+        {
+            ControlledLights[i].enabled = state;
+        }
+    }
 
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        playerNearby = true;
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        playerNearby = false;
+    }
 }

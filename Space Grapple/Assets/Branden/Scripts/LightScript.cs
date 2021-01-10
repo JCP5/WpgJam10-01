@@ -7,41 +7,27 @@ public class LightScript : MonoBehaviour
     public bool lightOn;
     public bool playerNearby;
 
-    void Update()
-    {
-        if(playerNearby == true && Input.GetKeyDown(KeyCode.E))
-        {
-            SwitchLight();
-        }
-    }
+    public Light lightComponent;
 
     public void SwitchLight()
     {
         if(lightOn == false)
         {
             lightOn = true;
-            LevelManager.instance.lightsOn++;
+            LevelManager.instance.UpdateLights(lightOn);
         }
         else if(lightOn == true)
         {
             lightOn = false;
-            LevelManager.instance.lightsOn--;
+            LevelManager.instance.UpdateLights(lightOn);
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void LightState(bool state)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (state)
         {
-            playerNearby = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            playerNearby = false;
+            lightComponent.enabled = state;
         }
     }
 }
