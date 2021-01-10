@@ -35,6 +35,7 @@ public class CrawlerBehaviour : MonoBehaviour
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, CheckLookDirection() * Vector2.right, Mathf.Infinity, 9);
 
+        //Debug.Log(hit);
         try
         {
             if (attacking == false)
@@ -130,22 +131,20 @@ public class CrawlerBehaviour : MonoBehaviour
                 Die();
             }
         }
+
+        if (transform.rotation.eulerAngles.y == 0)
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+        }
         else
         {
-            if (transform.rotation.eulerAngles.y == 0)
-            {
-                transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
-            }
-            else
-            {
-                transform.rotation = Quaternion.Euler(Vector3.zero);
-            }
+            transform.rotation = Quaternion.Euler(Vector3.zero);
         }
     }
 
     public void Die()
     {
-        Instantiate(deathEffect, this.transform.position, Quaternion.Euler(new Vector3 (-90,0,0)));
+        Instantiate(deathEffect, this.transform.position, Quaternion.Euler(new Vector3(-90, 0, 0)));
         Destroy(this.gameObject);
     }
 }
