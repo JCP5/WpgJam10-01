@@ -119,7 +119,7 @@ public class Grapple : MonoBehaviour
         {
             ShootGrapple();
         }
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) || Input.GetKeyDown(KeyCode.Space))
         {
             grappleEnd.Invoke();
             joint.connectedBody = null;

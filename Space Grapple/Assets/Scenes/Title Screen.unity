@@ -497,7 +497,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 111}
+  m_AnchoredPosition: {x: 82, y: 111}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &206687383
@@ -520,7 +520,18 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Cool dudes
+  m_text: '- Justen Chong
+
+    - Branden Kunst
+
+    - Nicholas Thiessen
+
+    - Elyot
+    Lamb
+
+    - Mikhael Bochurka
+
+    - Curtis Schneider'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -583,7 +594,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -130.21133, y: 0, z: -42.4834, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2029,18 +2040,24 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Space Bar: Jump
+  m_text: '- Space Bar: Jump
 
-    Space Bar in air: Double jump(you can do this after
-    grappling as well)
+    - Space Bar in air: Double jump(you can do this
+    after grappling as well)
 
-    Left click(hold): Shoot grapple at mouse cursor
+    - You have up to 3 jumps in the air, grappling
+    allows you to jump again, landing resets them
 
-    Release
-    left click: Release grapple
+    - Left click(hold): Shoot
+    grapple at mouse cursor
 
-    While swinging, use left and right to adjust
-    swing
+    - Release left click: Release grapple
+
+    - While
+    swinging, use left and right to adjust swing
+
+    - Drop boxes on enemies to
+    kill them
 
 '
   m_isRightToLeft: 0
@@ -2105,7 +2122,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -603.80206, y: 0, z: 0, w: 0}
+  m_margin: {x: -603.80206, y: -66.87201, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

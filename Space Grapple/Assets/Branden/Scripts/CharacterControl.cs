@@ -216,6 +216,7 @@ public class CharacterControl : MonoBehaviour
     {
         Instantiate(deathEffect, transform.position, Quaternion.identity);
         this.gameObject.SetActive(false);
+        scenenavigation.instance.Invoke("ReloadLevel", 1.5f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
