@@ -29,8 +29,6 @@ public class CharacterControl : MonoBehaviour
     //Other sound effects
     public AudioClip FirstJumpSound;
     public AudioClip DoubleJumpSound;
-    public AudioClip DeathSound;
-    
 
     public Transform groundCheck;
     public float checkRadius = 0.3f;
@@ -45,6 +43,10 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] CapsuleCollider2D capsule;
 
     public GameObject deathEffect;
+
+    public GameObject interactCanvas;
+
+    public GameObject jumpParticles;
 
 
     private void Awake()
@@ -101,6 +103,7 @@ public class CharacterControl : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space) && isGrounded == false && extraJumps > 0 && canJump == true)
         {
             DoubleJump();
+            Instantiate(jumpParticles, transform.position, transform.rotation);
         }
 
         
@@ -237,8 +240,7 @@ public class CharacterControl : MonoBehaviour
     {
         Instantiate(deathEffect, transform.position, Quaternion.identity);
         this.gameObject.SetActive(false);
-        scenenavigation.instance.Invoke("ReloadLevel", 1.5f);
-        audioSource.PlayOneShot(DeathSound);
+        scenenavigation.instance.Invoke("ReloadLevel", 2.2f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -246,6 +248,19 @@ public class CharacterControl : MonoBehaviour
         if (collision.gameObject.CompareTag("Laser"))
         {
             Die();
+        }
+
+        if (collision.gameObject.CompareTag("Interactable"))
+        {
+            interactCanvas.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Interactable"))
+        {
+            interactCanvas.SetActive(false);
         }
     }
 
