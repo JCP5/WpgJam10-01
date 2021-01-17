@@ -8,6 +8,7 @@ TagManager:
   - BezierControlPoint
   - Laser
   - Box
+  - Interactable
   layers:
   - Default
   - TransparentFX
