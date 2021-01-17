@@ -43,5 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41bc6c4280d120c4981bc11deb5d8804, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightsInScene: []
+  sceneNavigator: {fileID: 6406854736468731725, guid: 69a6fbbb7e1db6f40a2d1174e8c9d522, type: 3}
+  nextLevel: 0
   numOfLights: 1
   lightsOn: 0

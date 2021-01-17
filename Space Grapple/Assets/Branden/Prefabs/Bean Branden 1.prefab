@@ -870,6 +870,7 @@ MonoBehaviour:
   capsule: {fileID: 7963876196052036381}
   deathEffect: {fileID: 8590972417968913122, guid: f164713b3bcb5614eac90d3f7af772d4, type: 3}
   interactCanvas: {fileID: 674096555853401220}
+  jumpParticles: {fileID: 3322444630957587645, guid: a4ffca997dd190449a4c8ced846b49a5, type: 3}
 --- !u!50 &7963876196052036380
 Rigidbody2D:
   serializedVersion: 4

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class scenenavigation : MonoBehaviour
 {
@@ -19,20 +20,25 @@ public class scenenavigation : MonoBehaviour
         }
     }
 
-        // Start is called before the first frame update
-        void Start()
-        {
+    public void ReloadLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 
+    public void LoadNextLevelByInt()
+    {
+        try
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
-
-        // Update is called once per frame
-        void Update()
+        catch
         {
-
-        }
-
-        public void ReloadLevel()
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene(0);
         }
     }
+
+    public void LoadLevelByInt(int buildIndex)
+    {
+        SceneManager.LoadScene(buildIndex);
+    }
+}

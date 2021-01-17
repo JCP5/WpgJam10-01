@@ -7,6 +7,8 @@ public class LevelManager : MonoBehaviour
     public static LevelManager instance;
     public LightScript[] lightsInScene;
 
+    public scenenavigation sceneNavigator;
+
     public int nextLevel = 0;
 
     public int numOfLights;
@@ -29,6 +31,13 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         numOfLights = lightsInScene.Length;
+
+        scenenavigation temp = FindObjectOfType<scenenavigation>();
+        if (temp == null)
+        {
+            Instantiate(sceneNavigator, Vector3.zero, Quaternion.identity);
+        }
+
         InitializeOnLights();
     }
 
@@ -48,6 +57,9 @@ public class LevelManager : MonoBehaviour
         if (lightsOn >= numOfLights)
         {
             Debug.Log("Level Clear");
+
+            SpaceShipDoor door = FindObjectOfType<SpaceShipDoor>();
+            door.OpenDoor();
         }
     }
 
