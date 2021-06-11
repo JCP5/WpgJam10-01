@@ -27,7 +27,7 @@ public class SpaceShipDoor : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.tag == "Player" && LevelManager.instance.levelClear == true)
         {
             playerNearby = true;
             if (playerNearby == true)

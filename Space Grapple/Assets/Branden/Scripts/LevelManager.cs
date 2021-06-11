@@ -13,6 +13,7 @@ public class LevelManager : MonoBehaviour
 
     public int numOfLights;
     public int lightsOn;
+    public bool levelClear = false;
 
     void Awake()
     {
@@ -56,7 +57,7 @@ public class LevelManager : MonoBehaviour
     {
         if (lightsOn >= numOfLights)
         {
-            Debug.Log("Level Clear");
+            levelClear = true;
 
             SpaceShipDoor door = FindObjectOfType<SpaceShipDoor>();
             door.OpenDoor();
